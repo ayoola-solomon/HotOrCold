@@ -1,68 +1,74 @@
-function IsNumeric(n){
-    return !isNaN(n);
-} 
+ $(function () {
 
-function rand (x) {
-	return Math.round(Math.random()*x+1);
-}
+ 		function rand (x) {
+			return Math.round(Math.random()*x+1);
+		}
 
-function hot () {
-	return $("#randomnumber").text('You are Hot').
-			animate({ opacity: 1, fontSize: "3em"}, "slow").
-				css({ "background": "red", "color": "white"});
-}
+	 	var numRand = rand(100);
+	 	var current = null;
+	 	var previous = null;
+ 	
+ 		$('#guess').click(function(){
+ 			
+ 				var $userNum = $("#num").val();
+ 				var val = $userNum;
 
-function cold () {
-	return $("#randomnumber").text("You are Cold").
-			animate({ width: "40%", opacity: 1, fontSize: "3em"}, 1500).
-				css({ "background": "green"});
-}
+ 					previous = current;
+ 					current = val;
 
- var $numRand = rand(100);
+ 				if (val > 100 || val < 1) {
+ 					alert("Error Message");
+ 				} 
 
-$(function(){
+ 				else if ( val == numRand ) {
+ 					alert("Congratulations");
+ 				}
 
-    $("#guess").click(function() {
-    
-        var $userNum = $("#num").val();
+ 				else if ( current > numRand ) {
+ 					if ( previous !== null && Math.abs( numRand - current ) < Math.abs( numRand - previous ) ) {
+ 						alert("Walmer");
+ 					}
 
-        if ( isNaN ($userNum) || $userNum <= 0 || $userNum > 100 ) {
-			$("#randomnumber").text('Please enter a guess between 1 and 100').css( { "margin-top": "450px;" } );
-			return;
-			}
+ 					else if ( previous !== null && Math.abs( numRand - current ) > Math.abs( numRand - previous ) ) {
+ 						alert("Colder");
+ 					} 
 
+ 					else {
+ 						alert("Too High");
+ 					}
+ 				}
 
-        if ($userNum > $numRand) {
-			hot();
-		} 
-		else if ($userNum < $numRand) {
-			cold().animate({ width: "40%", opacity: 1, fontSize: "3em"}, 1500);
-			}
-			else {
-				$("#randomnumber").text('You got it! My number was ' + $numRand).animate( {width: "60%", height: "10%"}, 1500);
-				}
+ 				else if ( current < numRand ) {
+ 					if ( previous !== null && Math.abs( numRand - current ) < Math.abs( numRand - previous ) ) {
+ 						alert("Too Low - Walmer");
+ 					}
 
-        return false;
-    });
-    
+ 					else if ( previous !== null && Math.abs( numRand - current ) > Math.abs( numRand - previous ) ) {
+ 						alert("Too Low - Colder")
+ 					}
 
-     $("#newgame").click(function() {
- 			window.location = "index.html";
- 			$('#num').val = "";
+ 					else {
+ 						alert("Too Low");
+ 					}
+ 				}
+
+ 				else {
+ 					alert("Not a Number");
+ 				}
+
+ 				$("#num").val('');
  		});
 
-    // $("input[type=text]").each(function(){
-    //     $(this).data("first-click", true);
-    // });
-    
-    // $("input[type=text]").focus(function(){
-       
-    //     if ($(this).data("first-click")) {
-    //         $(this).val("");
-    //         $(this).data("first-click", false);
-    //         $(this).css("color", "black");
-    //     }
-        
-    // });
-	
-});
+		// Button for a new game
+ 		$('#newgame').click(function() {
+ 			window.location = "index.html";
+ 		});
+
+ 		// Activates by pressing the enter key
+ 		$("#num").keyup(function(event){
+    		if(event.keyCode == 13){
+        		$("#guess").click();
+    		}
+		});
+
+ });
