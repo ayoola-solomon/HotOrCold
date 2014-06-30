@@ -2,9 +2,10 @@
 
  		function rand (x) {
 			return Math.round(Math.random()*x+1);
-		}
+		};
 
 	 	var numRand = rand(100);
+	 	console.log(numRand);
 	 	var current = null;
 	 	var previous = null;
  	
@@ -17,43 +18,35 @@
  					current = val;
 
  				if (val > 100 || val < 1) {
- 					alert("Error Message");
+ 					$("#randomnumber").text("Please guess a number between 1 and 100");
  				} 
-
  				else if ( val == numRand ) {
- 					alert("Congratulations");
+ 					$("#randomnumber").text("Congratulations! You got the Number");
  				}
-
  				else if ( current > numRand ) {
  					if ( previous !== null && Math.abs( numRand - current ) < Math.abs( numRand - previous ) ) {
- 						alert("Walmer");
+ 						$("#randomnumber").text("You are Hot");
  					}
-
  					else if ( previous !== null && Math.abs( numRand - current ) > Math.abs( numRand - previous ) ) {
- 						alert("Colder");
+ 						$("#randomnumber").text("You are Cold");
  					} 
-
- 					else {
- 						alert("Too High");
- 					}
+ 					// else {
+ 					// 	$("#randomnumber").text("Too High");
+ 					// }
  				}
-
  				else if ( current < numRand ) {
  					if ( previous !== null && Math.abs( numRand - current ) < Math.abs( numRand - previous ) ) {
- 						alert("Too Low - Walmer");
+ 						$("#randomnumber").text("You are Hot");
  					}
-
  					else if ( previous !== null && Math.abs( numRand - current ) > Math.abs( numRand - previous ) ) {
- 						alert("Too Low - Colder")
+ 						$("#randomnumber").text("You are Cold")
  					}
-
- 					else {
- 						alert("Too Low");
- 					}
+ 					// else {
+ 					// 	$("#randomnumber").text("Too Low");
+ 					// }
  				}
-
  				else {
- 					alert("Not a Number");
+ 					$("#randomnumber").text("This game can oly accept numbers");
  				}
 
  				$("#num").val('');
